@@ -12,7 +12,11 @@ import com.devfun.settingweb_boot.dto.ExHolidaysLoginDTO;
 import com.devfun.settingweb_boot.dto.MonthLoginDTO;
 import com.devfun.settingweb_boot.dto.YearLoginDTO;
 import com.devfun.settingweb_boot.service.StatisticService;
- 
+
+
+
+
+
  
  
 @Controller
@@ -59,7 +63,7 @@ public class StatisticController {
  
     
     @ResponseBody 
-    @RequestMapping("/exHolidaysStatistic")
+    @RequestMapping("/departMonthStatistic")
     public DepartmentMonthLoginDTO getDepartMonthLogin(String yearMonth, String hrDepart) throws Exception{ 
         
         return service.departMonthLoginNum(yearMonth, hrDepart);

@@ -3,7 +3,7 @@ package com.devfun.settingweb_boot.dto;
 public class DepartmentMonthLoginDTO {
 	private int totCnt;
 	private String yearMonth;
-    private String Department;
+    private String department;
     private boolean isSuccess;
     
     public int getTotCnt() {
@@ -25,9 +25,9 @@ public class DepartmentMonthLoginDTO {
 		this.yearMonth = yearMonth;
 	}
 	public String getDepartment() {
-		return Department;
+		return department;
 	}
 	public void setDepartment(String department) {
-		Department = department;
+		this.department = department;
 	}
 }

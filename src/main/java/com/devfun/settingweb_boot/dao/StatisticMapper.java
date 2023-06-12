@@ -1,13 +1,17 @@
 package com.devfun.settingweb_boot.dao;
-import java.util.HashMap;
+import com.devfun.settingweb_boot.dto.AverageDailyLoginDTO;
+import com.devfun.settingweb_boot.dto.DailyLoginDTO;
+import com.devfun.settingweb_boot.dto.DepartmentMonthLoginDTO;
+import com.devfun.settingweb_boot.dto.ExHolidaysLoginDTO;
+import com.devfun.settingweb_boot.dto.MonthLoginDTO;
+import com.devfun.settingweb_boot.dto.YearLoginDTO;
  
-import com.devfun.settingweb_boot.dto.StatisticDto;
  
 public interface  StatisticMapper {
-    public HashMap<String, Object> selectYearLogin(String year);
-    public HashMap<String, Object> selectMonthLogin(String yearMonth);
-    public HashMap<String, Object> selectDayLogin(String daily);
-    public HashMap<String, Object> getAverageTotalLogin();
-    public HashMap<String, Object> getLoginsExcludingHolidays();
-    public HashMap<String, Object> selectDepartmentMonthLogin(String yearMonth, String hrDepart);
+	public YearLoginDTO selectYearLogin(String year);
+    public MonthLoginDTO selectMonthLogin(String yearMonth);
+    public DailyLoginDTO selectDayLogin(String daily);
+    public AverageDailyLoginDTO getAverageTotalLogin();
+    public ExHolidaysLoginDTO getLoginsExcludingHolidays();
+    public DepartmentMonthLoginDTO selectDepartmentMonthLogin(String yearMonth, String hrDepart);
 }

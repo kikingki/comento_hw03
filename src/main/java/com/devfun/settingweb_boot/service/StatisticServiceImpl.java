@@ -1,11 +1,16 @@
 package com.devfun.settingweb_boot.service;
  
  
-import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
+
 import com.devfun.settingweb_boot.dao.StatisticMapper;
+import com.devfun.settingweb_boot.dto.AverageDailyLoginDTO;
+import com.devfun.settingweb_boot.dto.DailyLoginDTO;
+import com.devfun.settingweb_boot.dto.DepartmentMonthLoginDTO;
+import com.devfun.settingweb_boot.dto.ExHolidaysLoginDTO;
+import com.devfun.settingweb_boot.dto.MonthLoginDTO;
+import com.devfun.settingweb_boot.dto.YearLoginDTO;
  
 @Service
 public class StatisticServiceImpl implements StatisticService {
@@ -15,22 +20,102 @@ public class StatisticServiceImpl implements StatisticService {
     private StatisticMapper uMapper;
     
     @Override
-    public HashMap<String, Object> yearloginNum (String year) {
-        // TODO Auto-generated method stub
-        HashMap<String, Object> retVal = new HashMap<String,Object>();
-        
+    public YearLoginDTO yearloginNum(String year) {
+        YearLoginDTO retVal = new YearLoginDTO();
+
         try {
             retVal = uMapper.selectYearLogin(year);
-            retVal.put("year", year);
-            retVal.put("is_success", true);
-            
-        }catch(Exception e) {
-            retVal.put("totCnt", -999);
-            retVal.put("year", year);
-            retVal.put("is_success", false);
+            retVal.setYear(year);
+            retVal.setSuccess(true);
+        } catch (Exception e) {
+            retVal.setTotCnt(-999);
+            retVal.setYear(year);
+            retVal.setSuccess(false);
         }
-        
+
         return retVal;
     }
  
+    @Override
+    public MonthLoginDTO monthloginNum(String yearMonth) {
+        MonthLoginDTO retVal = new MonthLoginDTO();
+
+        try {
+            retVal = uMapper.selectMonthLogin(yearMonth);
+            retVal.setYearMonth(yearMonth);
+            retVal.setSuccess(true);
+        } catch (Exception e) {
+            retVal.setTotCnt(-999);
+            retVal.setYearMonth(yearMonth);
+            retVal.setSuccess(false);
+        }
+
+        return retVal;
+    }
+    
+    @Override
+    public DailyLoginDTO dailyloginNum(String daily) {
+    	DailyLoginDTO retVal = new DailyLoginDTO();
+
+        try {
+            retVal = uMapper.selectDayLogin(daily);
+            retVal.setDaily(daily);
+            retVal.setSuccess(true);
+        } catch (Exception e) {
+            retVal.setTotCnt(-999);
+            retVal.setDaily(daily);
+            retVal.setSuccess(false);
+        }
+
+        return retVal;
+    }
+    
+    @Override
+    public AverageDailyLoginDTO avgTotalLoginNum() {
+    	AverageDailyLoginDTO retVal = new AverageDailyLoginDTO();
+
+        try {
+            retVal = uMapper.getAverageTotalLogin();
+            retVal.setSuccess(true);
+        } catch (Exception e) {
+            retVal.setAverage(-999.0);
+            retVal.setSuccess(false);
+        }
+
+        return retVal;
+    }
+    
+    @Override
+    public ExHolidaysLoginDTO exHolidaysLoginNum () {
+    	ExHolidaysLoginDTO retVal = new ExHolidaysLoginDTO();
+
+        try {
+            retVal = uMapper.getLoginsExcludingHolidays();
+            retVal.setSuccess(true);
+        } catch (Exception e) {
+            retVal.setExHolidaysCnt(-999);
+            retVal.setSuccess(false);
+        }
+
+        return retVal;
+    }
+    
+    @Override
+    public DepartmentMonthLoginDTO departMonthLoginNum(String yearMonth, String hrDepart) {
+    	DepartmentMonthLoginDTO retVal = new DepartmentMonthLoginDTO();
+
+        try {
+            retVal = uMapper.selectDepartmentMonthLogin(yearMonth, hrDepart);
+            retVal.setYearMonth(yearMonth);
+            retVal.setDepartment(hrDepart);
+            retVal.setSuccess(true);
+        } catch (Exception e) {
+            retVal.setTotCnt(-999);
+            retVal.setYearMonth(yearMonth);
+            retVal.setDepartment(hrDepart);
+            retVal.setSuccess(false);
+        }
+
+        return retVal;
+    }
 }

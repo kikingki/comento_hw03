@@ -5,47 +5,47 @@
     
 <mapper namespace="com.devfun.settingweb_boot.dao.StatisticMapper">
 	<!-- 연도별 접속자 수 -->
-    <select id="selectYearLogin" parameterType="string" resultType="hashMap">
-        select count(*) as totCnt
+    <select id="selectYearLogin" parameterType="string" resultType="com.devfun.settingweb_boot.dto.YearLoginResponseDTO">
+        select count(DISTINCT userID) as totCnt
         from statistc.requestinfo ri
         where left(ri.createDate, 2) = #{year};
     </select>
     
     <!-- 월별 접속자 수 -->
-	<select id="selectMonthLogin" parameterType="string" resultType="hashMap">
-	    SELECT COUNT(*) AS monthlyActiveUsers
+	<select id="selectMonthLogin" parameterType="string" resultType="com.devfun.settingweb_boot.dto.MonthLoginResponseDTO">
+	    SELECT COUNT(DISTINCT userID) as totCnt
 	    FROM statistc.requestInfo ri
-	    WHERE LEFT(ri.createDate, 6) = #{yearMonth};
+	    WHERE LEFT(ri.createDate, 4) = #{yearMonth};
 	</select>
 	
 	<!-- 일별 접속자 수 -->
-	<select id="selectDayLogin" parameterType="string" resultType="hashMap">
-	    SELECT COUNT(*) AS dailyActiveUsers
+	<select id="selectDayLogin" parameterType="string" resultType="com.devfun.settingweb_boot.dto.DailyLoginResponseDTO">
+	    SELECT COUNT(DISTINCT userID) as totCnt
 	    FROM statistc.requestInfo ri
-	    WHERE LEFT(ri.createDate, 8) = #{daily};
+	    WHERE LEFT(ri.createDate, 6) = #{daily};
 	</select>
 
 	<!-- 평균 하루 접속자 수 -->	
-	<select id="getAverageTotalLogin" parameterType="string" resultType="hashMap">
-		SELECT AVG(totalLogins) AS averageTotalLogins
+	<select id="getAverageTotalLogin" parameterType="string" resultType="com.devfun.settingweb_boot.dto.AverageResponseDTO">
+		SELECT AVG(totalLogins) AS average
 		FROM (
-		    SELECT COUNT(*) AS totalLogins
+		    SELECT COUNT(DISTINCT userID) AS totalLogins
 		    FROM statistc.requestInfo
 		) AS subquery;
 	</select>
 	
 	<!-- 휴일을 제외한 로그인 수 -->
-	<select id="getLoginsExcludingHolidays" parameterType="string" resultType="hashMap">
-	    SELECT COUNT(*) AS loginsExcludingHolidays
+	<select id="getLoginsExcludingHolidays" parameterType="string" resultType="com.devfun.settingweb_boot.dto.ExHolidaysLoginResponseDTO">
+	    SELECT COUNT(*) AS exHolidaysCnt
 	    FROM statistc.requestInfo ri
 	    WHERE LEFT(ri.createDate, 6) NOT IN (SELECT SUBSTRING(holiday_date, 3, 6) FROM holidays);
 	</select>
 	
 	<!-- 부서별 월별 로그인 수 -->
-	<select id="selectDepartmentMonthLogin" parameterType="map" resultType="hashMap">
-	    SELECT COUNT(*) AS monthlyLogins
+	<select id="selectDepartmentMonthLogin" parameterType="string" resultType="com.devfun.settingweb_boot.dto.DepartmentMonthLoginDTO">
+	    SELECT COUNT(*) AS totCnt
 	    FROM statistc.requestInfo ri
 	    JOIN statistc.user u ON ri.userID = u.userID
-	    WHERE LEFT(ri.createDate, 6) = #{yearMonth} AND u.HR_ORGAN = #{hrDepart};
+	    WHERE LEFT(ri.createDate, 4) = #{yearMonth} AND u.HR_ORGAN = #{hrDepart};
 	</select>
 </mapper>

@@ -1,4 +1,4 @@
-# comento_hw03
+# comento_hw03 & Hw04
 #### 스프링부트 간단한 API 구현 - 20년도 로그인 수 API
 - 스프링부트 개발환경 세팅
 - 통계 API DB Table 생성
@@ -14,3 +14,9 @@
     ![image](https://github.com/kikingki/comento_hw03/assets/63100425/90493cab-416e-4c3b-9503-d1dc7692d47e)
 
 5) 부서별 월별 로그인 수
+
+#### 통계 API 5개 구현
+- 3차 과제에서 작성한 SQL을 기준으로 API 구현
+- 3주차 과제 피드백
+  - responseDTO를 사용하는 방법으로 변경
+  - 접속자 수는 같은 사람이 여러번 로그인해도 1번으로 연산하므로, sql 쿼리문에 userID를 기준으로 중복을 제거하는 'DISTINCT userID' 사용
